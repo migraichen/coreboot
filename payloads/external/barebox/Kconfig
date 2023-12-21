@@ -1,0 +1,17 @@
+if PAYLOAD_BAREBOX
+
+config PAYLOAD_CONFIGFILE
+	string "barebox config file"
+	default ""
+	help
+	  This option allows a platform to set Kconfig options for a basic
+	  barebox payload. In general, if the option is used, the default
+	  would be "$(top)/src/mainboard/$(MAINBOARDDIR)/config_barebox"
+	  for a config stored in the coreboot mainboard directory, or
+	  "$(project_dir)/configs/coreboot-x86_defconfig" to use a config
+	  from the barebox config directory
+
+config PAYLOAD_FILE
+	default "payloads/external/barebox/build/barebox"
+
+endif
