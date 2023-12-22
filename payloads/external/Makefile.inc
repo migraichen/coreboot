@@ -435,6 +435,12 @@ payloads/external/skiboot/build/skiboot.elf:
 payloads/external/coreDOOM/coredoom/doomgeneric/coredoom.elf coredoom:
 	$(MAKE) -C payloads/external/coreDOOM
 
+# barebox
+
+payloads/external/barebox/build/barebox barebox:
+	$(MAKE) -C payloads/external/barebox \
+		CONFIG_PAYLOAD_CONFIGFILE=$(CONFIG_PAYLOAD_CONFIGFILE)
+
 cbfs-files-$(CONFIG_COREDOOM_SECONDARY_PAYLOAD) += img/coreDOOM
 img/coreDOOM-file := payloads/external/coreDOOM/coredoom/doomgeneric/coredoom.elf
 img/coreDOOM-type := payload

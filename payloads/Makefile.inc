@@ -29,6 +29,7 @@ payloads/external/GRUB2 \
 payloads/external/LinuxBoot \
 payloads/external/skiboot \
 payloads/external/coreDOOM \
+payloads/external/barebox \
 
 force-payload:
 

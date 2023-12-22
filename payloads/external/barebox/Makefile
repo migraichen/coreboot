@@ -2,11 +2,11 @@
 
 project_name=barebox
 project_dir=barebox
-project_git_repo=https://github.com/migraichen/barebox
+project_git_repo=git@github.com:migraichen/barebox.git
 project_build_dir=build
 project_config_file=$(project_build_dir)/.config
 
-make_args=-C $(project_dir) O=../build
+make_args=-C $(project_dir) ARCH=x86 O=../build
 
 unexport KCONFIG_AUTOHEADER
 unexport KCONFIG_AUTOCONFIG
@@ -20,22 +20,22 @@ all: build
 
 $(project_dir):
 	echo "    Cloning $(project_name) from Git"
-	git clone $(project_git_repo) -b barebox-legacy
+	git clone $(project_git_repo)
 
 fetch: $(project_dir)
 	echo "    Fetching new commits from the $(project_name) git repo"
 	git fetch
 
 checkout: fetch
-	echo "    Checking out $(project_name) revision $(TAG-y)"
-	cd $(project_dir); git checkout master; git branch -D coreboot 2>/dev/null; git checkout -b coreboot $(TAG-y)
+	echo "    Checking out $(project_name)"
+	cd $(project_dir); git checkout barebox-legacy; git branch -D coreboot 2>/dev/null; git checkout -b coreboot $(TAG-y)
 
 config: checkout
 	mkdir -p $(project_build_dir)
 	rm -f $(project_config_file)
 ifneq ($(CONFIG_PAYLOAD_CONFIGFILE),)
 ifneq ("$(wildcard $(CONFIG_PAYLOAD_CONFIGFILE))","")
-	cat $(CONFIG_PAYLOAD_CONFIGFILE)" > tag-$(project_config_file)
+	cat $(CONFIG_PAYLOAD_CONFIGFILE) > $(project_config_file)
 	$(MAKE) $(make_args) olddefconfig
 else
 	echo "Error: File $(CONFIG_PAYLOAD_CONFIGFILE) does not exist"
